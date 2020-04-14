@@ -12,6 +12,7 @@ def main():
   cost = dist_mat.tolist()
 
   num_workers = len(cost)
+  
   num_tasks = len(cost[1])
   x = {}
 
@@ -56,9 +57,6 @@ def main():
 
   print()
   print("Time = ", solver.WallTime(), " milliseconds")
-
-  
-
 
 if __name__ == '__main__':
   main()

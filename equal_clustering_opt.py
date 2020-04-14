@@ -10,7 +10,7 @@ from ortools.graph import pywrapgraph
 
 df_raw = pd.read_csv('datasets/sb_locs.csv', header = 0)[['Longitude','Latitude']].dropna().head(1600)
 
-k = 20
+k = 7
 n_eq = (len(df_raw) - (len(df_raw) % k))/k
 df = df_raw.head(len(df_raw) - (len(df_raw) % k))
 
