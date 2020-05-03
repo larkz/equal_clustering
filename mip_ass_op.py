@@ -1,15 +1,23 @@
 from __future__ import print_function
 from ortools.linear_solver import pywraplp
-from equal_clustering_opt import *
+# from equal_clustering_opt import *
+from equal_clustering_prep_elki import *
 import pickle as pkl
+import sys
+from get_mse import *
+
 
 # https://developers.google.com/optimization/assignment/assignment_mip
 
-def main():
+def main(n_clus):
+
+  elki_result_obj = elki_cluster_obj(int(n_clus))
+  k = elki_result_obj.k
+
   solver = pywraplp.Solver('SolveAssignmentProblemMIP',
                            pywraplp.Solver.CBC_MIXED_INTEGER_PROGRAMMING)
 
-  cost = dist_mat.tolist()
+  cost = elki_result_obj.dist_mat.tolist()
 
   num_workers = len(cost)
   
@@ -34,10 +42,9 @@ def main():
   # Each task is assigned to exactly one worker.
 
   for j in range(num_tasks):
-    solver.Add(solver.Sum([x[i, j] for i in range(num_workers)]) == k)
-
-  # Each team takes on two tasks.
-  
+    # solver.Add(solver.Sum([x[i, j] for i in range(num_workers)]) == k)
+    solver.Add(solver.Sum([x[i, j] for i in range(num_workers)]) == int(n_clus))
+    
   sol = solver.Solve()
   output_list = []
 
@@ -52,11 +59,15 @@ def main():
               cost[i][j]))
         output_list.append([i, j])
   
-  with open('or_tools_output/ass_mip.pkl', 'wb') as file_io:
+  with open('or_tools_output/ass_mip_elki_' + str(k) + '.pkl', 'wb') as file_io:
     pkl.dump(output_list, file_io)
+  
+  with open('or_tools_output/ass_mip_costs_elki_' + str(k) + '.pkl', 'wb') as file_io:
+    pkl.dump(cost, file_io)
 
   print()
   print("Time = ", solver.WallTime(), " milliseconds")
 
 if __name__ == '__main__':
-  main()
+  n_clus = sys.argv[1]
+  main(n_clus)

@@ -9,9 +9,9 @@ import pickle as pkl
 
 # df_raw = pd.read_csv('iris.txt', header = None).rename(columns={0: "sl", 1: "sw", 2: "X", 3: "Y", 4: "class" })
 
-df_raw = pd.read_csv('datasets/sb_locs.csv', header = 0)[['Longitude','Latitude']].dropna().head(1600)
+df_raw = pd.read_csv('datasets/sb_locs.csv', header = 0)[['Longitude','Latitude']].dropna() # .head(1600)
 
-k = 20
+k = 3200
 n_eq = (len(df_raw) - (len(df_raw) % k))/k
 df = df_raw.head(len(df_raw) - (len(df_raw) % k))
 
