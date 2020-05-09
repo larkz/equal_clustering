@@ -6,7 +6,7 @@ import pickle as pkl
 import sys
 from get_mse import *
 
-n_clus = 4
+n_clus = 5
 elki_result_obj = elki_cluster_obj(int(n_clus))
 
 k = elki_result_obj.k

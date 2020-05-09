@@ -21,7 +21,7 @@ class elki_cluster_obj:
         raw_data = self.raw_data
         self.num_clus = num_clus
         
-        k = int(len(raw_data)/num_clus)
+        k = int(len(raw_data)/num_clus - (len(raw_data) % num_clus) )
         print(k)
         self.k = k
         
@@ -29,10 +29,10 @@ class elki_cluster_obj:
         # self.df = raw_data.head(len(raw_data) - (len(raw_data) % k))
         # Take a dividible number
         self.coords = self.raw_data[:, 1:3].astype(float)[0:int(self.n_eq * k)]
+        self.raw_coords = self.raw_data[:, 1:3].astype(float)
         
         self.cluster_centers = get_all_centroids(raw_data)
         self.dist_mat = euclidean_distances(self.coords, self.cluster_centers)
-
 
 # https://stackoverflow.com/questions/17289032/solving-a-linear-program-in-case-of-an-equality-constraint
 # adding an equality constraint
