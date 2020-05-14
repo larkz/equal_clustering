@@ -8,8 +8,7 @@ from get_mse import *
 
 # n_clus = 7
 n_clus = sys.argv[1]
-fac = float(sys.argv[2])
-elki_result_obj = elki_cluster_obj(int(n_clus))
+elki_result_obj = elki_cluster_obj_samp(int(n_clus))
 
 k = elki_result_obj.k
 
@@ -41,10 +40,8 @@ for j in range(num_wp):
 # Each depot is assigned to exactly k wp's.
 # fac = 0.2
 for i in range(num_depots):
-    solver.Add(solver.Sum([1 * x[i, j] for j in range(num_wp)]) <= (1 + fac) * k)
+    solver.Add(solver.Sum([1 * x[i, j] for j in range(num_wp)]) == k)
 
-for i in range(num_depots):
-    solver.Add(solver.Sum([1 * x[i, j] for j in range(num_wp)]) >= (1 - fac) * k)
 
 sol = solver.Solve()
 print('Total cost = ', solver.Objective().Value())
@@ -56,10 +53,10 @@ for i in range(num_depots):
             print('depot %d assigned to wp %d.  Cost = %f' % (i, j, cost[i][j]))
             output_list.append([i, j])
 
-with open('or_tools_output/ass_mip_elki_' + str(n_clus) + 'relax_' + str(fac) + '.pkl', 'wb') as file_io:
+with open('or_tools_output/ass_mip_elki_' + str(n_clus) + '.pkl', 'wb') as file_io:
     pkl.dump(output_list, file_io)
 
-with open('or_tools_output/ass_mip_costs_elki_' + str(n_clus) + 'relax_' + str(fac) + '.pkl', 'wb') as file_io:
+with open('or_tools_output/ass_mip_costs_elki_' + str(n_clus) + '.pkl', 'wb') as file_io:
     pkl.dump(cost, file_io)
 
 print("Time = ", solver.WallTime(), " milliseconds")
