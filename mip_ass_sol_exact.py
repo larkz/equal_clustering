@@ -61,5 +61,3 @@ with open('or_tools_output/ass_mip_costs_elki_' + str(n_clus) + '.pkl', 'wb') as
 
 print("Time = ", solver.WallTime(), " milliseconds")
 
-
-

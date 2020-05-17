@@ -45,6 +45,8 @@ mse = np.mean(se)
 
 print(mse)
 
+'''
+
 ############# MIP post ELKI
 
 ass = pkl.load(open("or_tools_output/ass_mip_elki_" + str(n_clus) + "relax_" + str(fac) + ".pkl", "rb" ))
@@ -89,6 +91,7 @@ se = pows[:,0] + pows[:,1]
 
 mse = np.mean(se)
 print(mse)
+'''
 
 ########### MSE ELKI Sample
 
@@ -151,12 +154,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 elki_cents = np.array([i for i in clus_dic_elki.values()])
-mip_cents = np.array([i for i in clus_dic.values()])
+# mip_cents = np.array([i for i in clus_dic.values()])
 mip_samp_cents = np.array([i for i in clus_dic_samp.values()])
 
 plt.scatter(coords[:, 0], coords[:, 1], marker='^')
 plt.scatter(elki_cents[:, 0], elki_cents[:, 1], marker='o')
-plt.scatter(mip_cents[:, 0], mip_cents[:, 1], marker='x')
+# plt.scatter(mip_cents[:, 0], mip_cents[:, 1], marker='x')
 plt.scatter(mip_samp_cents[:, 0], mip_samp_cents[:, 1], marker='+')
 
 
