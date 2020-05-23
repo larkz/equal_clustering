@@ -5,8 +5,11 @@ from get_mse import *
 import sys
 
 n_clus = sys.argv[1]
-fac = sys.argv[2]
-elki_result_obj = elki_cluster_obj(int(n_clus))
+# fac = sys.argv[2]
+file_id = sys.argv[2]
+samp_size = sys.argv[3]
+
+elki_result_obj = elki_cluster_obj(int(n_clus), file_id)
 
 k = elki_result_obj.k
 n_eq = elki_result_obj.n_eq
@@ -95,7 +98,7 @@ print(mse)
 
 ########### MSE ELKI Sample
 
-elki_result_obj = elki_cluster_obj_samp(int(n_clus))
+elki_result_obj = elki_cluster_obj_samp(int(n_clus), file_id, int(samp_size) )
 
 k = elki_result_obj.k
 n_eq = elki_result_obj.n_eq

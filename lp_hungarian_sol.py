@@ -8,7 +8,8 @@ import sys
 from get_mse import *
 
 n_clus = 7
-elki_result_obj = elki_cluster_obj(int(n_clus))
+file_id = 'starbucks'
+elki_result_obj = elki_cluster_obj(int(n_clus), file_id)
 
 k = elki_result_obj.k
 

@@ -9,7 +9,9 @@ from get_mse import *
 # n_clus = 7
 n_clus = sys.argv[1]
 fac = float(sys.argv[2])
-elki_result_obj = elki_cluster_obj(int(n_clus))
+file_id = sys.argv[3]
+
+elki_result_obj = elki_cluster_obj(int(n_clus), file_id)
 
 k = elki_result_obj.k
 

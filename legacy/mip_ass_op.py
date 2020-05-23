@@ -9,9 +9,9 @@ from get_mse import *
 
 # https://developers.google.com/optimization/assignment/assignment_mip
 
-def main(n_clus):
+def main(n_clus, file_id):
 
-  elki_result_obj = elki_cluster_obj(int(n_clus))
+  elki_result_obj = elki_cluster_obj(int(n_clus), file_id)
   k = elki_result_obj.k
 
   solver = pywraplp.Solver('SolveAssignmentProblemMIP',
@@ -70,4 +70,5 @@ def main(n_clus):
 
 if __name__ == '__main__':
   n_clus = sys.argv[1]
-  main(n_clus)
+  file_id = sys.argv[2]
+  main(n_clus, file_id)

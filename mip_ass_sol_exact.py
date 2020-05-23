@@ -8,7 +8,9 @@ from get_mse import *
 
 # n_clus = 7
 n_clus = sys.argv[1]
-elki_result_obj = elki_cluster_obj_samp(int(n_clus))
+file_id = sys.argv[2]
+samp_size = sys.argv[3]
+elki_result_obj = elki_cluster_obj_samp(int(n_clus), file_id, int(samp_size))
 
 k = elki_result_obj.k
 
@@ -59,5 +61,8 @@ with open('or_tools_output/ass_mip_elki_' + str(n_clus) + '.pkl', 'wb') as file_
 with open('or_tools_output/ass_mip_costs_elki_' + str(n_clus) + '.pkl', 'wb') as file_io:
     pkl.dump(cost, file_io)
 
-print("Time = ", solver.WallTime(), " milliseconds")
+runtime = solver.WallTime()
+print("Time = ", runtime, " milliseconds")
 
+with open( "runtimes/" + str(file_id) + ".txt", "a") as f:
+    f.write( str(n_clus) + "," + str(runtime) + "," + str(samp_size) + ",elki-approx" + "\n" )
