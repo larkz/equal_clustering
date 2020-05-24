@@ -8,6 +8,7 @@ n_clus = sys.argv[1]
 # fac = sys.argv[2]
 file_id = sys.argv[2]
 samp_size = sys.argv[3]
+to_plot = sys.argv[4]
 
 elki_result_obj = elki_cluster_obj(int(n_clus), file_id)
 
@@ -44,9 +45,9 @@ for i in range(0, num_wp):
 pows = np.power(depot_pts - coords, 2)
 se = pows[:,0] + pows[:,1]
 
-mse = np.mean(se)
+elki_mse = np.mean(se)
 
-print(mse)
+print(elki_mse)
 
 '''
 
@@ -153,24 +154,21 @@ print(mse)
 
 ##########
 
-import numpy as np
-import matplotlib.pyplot as plt
+if int(to_plot):
+    import matplotlib.pyplot as plt
 
-elki_cents = np.array([i for i in clus_dic_elki.values()])
-# mip_cents = np.array([i for i in clus_dic.values()])
-mip_samp_cents = np.array([i for i in clus_dic_samp.values()])
+    elki_cents = np.array([i for i in clus_dic_elki.values()])
+    # mip_cents = np.array([i for i in clus_dic.values()])
+    mip_samp_cents = np.array([i for i in clus_dic_samp.values()])
 
-plt.scatter(coords[:, 0], coords[:, 1], marker='^')
-plt.scatter(elki_cents[:, 0], elki_cents[:, 1], marker='o')
-# plt.scatter(mip_cents[:, 0], mip_cents[:, 1], marker='x')
-plt.scatter(mip_samp_cents[:, 0], mip_samp_cents[:, 1], marker='+')
+    plt.scatter(coords[:, 0], coords[:, 1], marker='^')
+    plt.scatter(elki_cents[:, 0], elki_cents[:, 1], marker='o')
+    # plt.scatter(mip_cents[:, 0], mip_cents[:, 1], marker='x')
+    plt.scatter(mip_samp_cents[:, 0], mip_samp_cents[:, 1], marker='+')
+    plt.show()
 
-
-plt.show()
-
-
-
-
+with open( "error_metrics/" + str(file_id) + ".txt", "a") as f:
+    f.write( str(n_clus) + "," + str(samp_size) + "," + str(elki_mse) + "," + str(mse) + "\n" )
 
 
 
