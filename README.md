@@ -26,7 +26,7 @@ sed -i -e 's/# Cluster Mean: //g' {corrected_file}; rm {corrected_file}-e
 
 Running `bash_pipeline.sh` with the approprite arguments.
 
-
+Example `sh bash_loop.sh starbucks 10 1000`.
 
 # Compute the errors, write the file, get the times
 
