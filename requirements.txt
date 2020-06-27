@@ -4,4 +4,6 @@ scipy
 pandas
 ortools
 matplotlib
-
+geopandas
+geoplot
+git+https://github.com/matplotlib/basemap.git

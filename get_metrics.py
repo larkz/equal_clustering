@@ -3,6 +3,10 @@ import numpy as np
 from equal_clustering_prep_elki import *
 from get_mse import *
 import sys
+# import geopandas
+# import geoplot
+from mpl_toolkits.basemap import Basemap
+
 
 n_clus = sys.argv[1]
 # fac = sys.argv[2]
@@ -152,20 +156,48 @@ se = pows[:,0] + pows[:,1]
 mse = np.mean(se)
 print(mse)
 
+
 ##########
 
 if int(to_plot):
     import matplotlib.pyplot as plt
+    # plt.ion()
 
     elki_cents = np.array([i for i in clus_dic_elki.values()])
     # mip_cents = np.array([i for i in clus_dic.values()])
     mip_samp_cents = np.array([i for i in clus_dic_samp.values()])
 
-    plt.scatter(coords[:, 0], coords[:, 1], marker='^')
-    plt.scatter(elki_cents[:, 0], elki_cents[:, 1], marker='o')
+    # m = Basemap(width=12000000,height=9000000,projection='lcc',
+    #     resolution='c',lat_1=45.,lat_2=55,lon_0=-50,lat_0=60)
+    m = Basemap(projection='merc',llcrnrlat=-80,urcrnrlat=80,\
+            llcrnrlon=-180,urcrnrlon=180,lat_ts=20,resolution='c')
+    m.drawcoastlines()
+
+    sc_fac = 1
+    coords_x, coords_y = m(coords[:, 0] * sc_fac, coords[:, 1] * sc_fac)
+    ek_x, ek_y = m(elki_cents[:, 0] * sc_fac, elki_cents[:, 1] * sc_fac)
+
+    m.scatter(coords_x, coords_y, marker='^')
+    m.scatter(ek_x, ek_y, marker='o')
     # plt.scatter(mip_cents[:, 0], mip_cents[:, 1], marker='x')
-    plt.scatter(mip_samp_cents[:, 0], mip_samp_cents[:, 1], marker='+')
+    m.scatter(mip_samp_cents[:, 0], mip_samp_cents[:, 1], marker='+')
     plt.show()
+
+    # Create assignment plot, for all points,
+
+    m2 = Basemap(projection='merc',llcrnrlat=-80,urcrnrlat=80,\
+            llcrnrlon=-180,urcrnrlon=180,lat_ts=20,resolution='c')
+    m2.drawcoastlines()
+
+    print(ass_arr_v3)
+
+    coords_x_ass, coords_y_ass = m2(ass_arr_v3[:, 0], ass_arr_v3[:, 1])
+    m2.scatter(coords_x_ass, coords_y_ass, c=ass_arr_v3[:, 2], marker='^')
+    plt.show()
+    
+
+
+
 
 with open( "error_metrics/" + str(file_id) + ".txt", "a") as f:
     f.write( str(n_clus) + "," + str(samp_size) + "," + str(elki_mse) + "," + str(mse) + "\n" )
